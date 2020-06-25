@@ -1,5 +1,4 @@
 [
-    "apps/counter",
     "apps/animated_list",
-    "apps/bottom_bar"
+    "packages/counter_mixin"
 ]

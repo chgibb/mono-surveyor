@@ -1,4 +1,4 @@
-name: surveyors
+name: add_fab
 description: A new Flutter package project.
 version: 0.0.1
 author:
@@ -10,10 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  surveyor:
-    git:
-      url: git://github.com/pq/surveyor
-      ref: 776e3099d4acf5b81051333a477dca06d987029b
 
 dev_dependencies:
   flutter_test:

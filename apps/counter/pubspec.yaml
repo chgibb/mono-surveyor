@@ -24,8 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  increment:
-    path: "../../packages/increment"
+  counter_mixin:
+    path: "../../packages/counter_mixin"
+  
+  add_fab:
+    path: "../../packages/add_fab"
 
 
   # The following adds the Cupertino Icons font to your application.

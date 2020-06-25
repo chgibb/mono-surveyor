@@ -49,22 +49,25 @@ class _Visitor extends SimpleAstVisitor {
             node.thisOrAncestorMatching<CompilationUnit>(
                 (argument) => argument is CompilationUnit);
 
-        Package invokerPackage = packages.firstWhere(
-            (x) =>
-                RegExp(RegExp.escape(x.dir), caseSensitive: false)
-                    .stringMatch(invokingCompilationUnit
-                        .declaredElement?.librarySource?.fullName)
-                    ?.isNotEmpty ??
-                false,
-            orElse: () => null);
+        if (invokingCompilationUnit.declaredElement?.librarySource?.fullName !=
+            invokeeLibrarySource) {
+          Package invokerPackage = packages.firstWhere(
+              (x) =>
+                  RegExp(RegExp.escape(x.dir), caseSensitive: false)
+                      .stringMatch(invokingCompilationUnit
+                          .declaredElement?.librarySource?.fullName)
+                      ?.isNotEmpty ??
+                  false,
+              orElse: () => null);
 
-        bool isLegalReference = invokeePackage.friends.firstWhere(
-                (element) => element == invokerPackage.dir,
-                orElse: () => null) !=
-            null;
+          bool isLegalReference = invokeePackage.friends.firstWhere(
+                  (element) => element == invokerPackage.dir,
+                  orElse: () => null) !=
+              null;
 
-        if (!isLegalReference) {
-          rule.reportLint(node.methodName);
+          if (!isLegalReference) {
+            rule.reportLint(node.methodName);
+          }
         }
       }
     } catch (err, stack) {

@@ -32,14 +32,14 @@ class _Visitor extends SimpleAstVisitor {
   void visitMethodInvocation(MethodInvocation node) {
     try {
       String invokeeLibrarySource =
-          node.methodName.staticElement.librarySource.fullName;
+          node.methodName.staticElement?.librarySource?.fullName;
 
       Package invokeePackage;
 
       invokeePackage = packages.firstWhere(
           (x) =>
               RegExp(RegExp.escape(x.dir), caseSensitive: false)
-                  .stringMatch(invokeeLibrarySource)
+                  .stringMatch(invokeeLibrarySource ?? "")
                   ?.isNotEmpty ??
               false,
           orElse: () => null);
@@ -53,7 +53,7 @@ class _Visitor extends SimpleAstVisitor {
             (x) =>
                 RegExp(RegExp.escape(x.dir), caseSensitive: false)
                     .stringMatch(invokingCompilationUnit
-                        .declaredElement.librarySource.fullName)
+                        .declaredElement?.librarySource?.fullName)
                     ?.isNotEmpty ??
                 false,
             orElse: () => null);

@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/lint/linter.dart';
 import 'package:meta/meta.dart';
 import 'package:surveyors/src/package.dart';
@@ -18,7 +19,7 @@ class FriendVisibilitySurveyor extends LintRule implements NodeLintRule {
   void registerNodeProcessors(NodeLintRegistry registry,
       [LinterContext context]) {
     var visitor = _Visitor(rule: this, packages: packages);
-    registry.addMethodInvocation(this, visitor);
+    registry.addImportDirective(this, visitor);
   }
 }
 
@@ -28,11 +29,12 @@ class _Visitor extends SimpleAstVisitor {
 
   _Visitor({@required this.rule, @required this.packages});
 
-  @override
-  void visitMethodInvocation(MethodInvocation node) {
+  void verifyVisibility(
+      {@required Element staticElement,
+      @required AstNode astNode,
+      @required CompilationUnit compilationUnit}) {
     try {
-      String invokeeLibrarySource =
-          node.methodName.staticElement?.librarySource?.fullName;
+      String invokeeLibrarySource = staticElement?.librarySource?.fullName;
 
       Package invokeePackage;
 
@@ -45,28 +47,26 @@ class _Visitor extends SimpleAstVisitor {
           orElse: () => null);
 
       if (invokeePackage != null) {
-        CompilationUnit invokingCompilationUnit =
-            node.thisOrAncestorMatching<CompilationUnit>(
-                (argument) => argument is CompilationUnit);
-
-        if (invokingCompilationUnit.declaredElement?.librarySource?.fullName !=
+        if (compilationUnit.declaredElement?.librarySource?.fullName !=
             invokeeLibrarySource) {
           Package invokerPackage = packages.firstWhere(
               (x) =>
                   RegExp(RegExp.escape(x.dir), caseSensitive: false)
-                      .stringMatch(invokingCompilationUnit
+                      .stringMatch(compilationUnit
                           .declaredElement?.librarySource?.fullName)
                       ?.isNotEmpty ??
                   false,
               orElse: () => null);
 
-          bool isLegalReference = invokeePackage.friends.firstWhere(
-                  (element) => element == invokerPackage.dir,
-                  orElse: () => null) !=
-              null;
+          if (invokeePackage.dir != invokerPackage.dir) {
+            bool isLegalReference = invokeePackage.friends.firstWhere(
+                    (element) => element == invokerPackage.dir,
+                    orElse: () => null) !=
+                null;
 
-          if (!isLegalReference) {
-            rule.reportLint(node.methodName);
+            if (!isLegalReference) {
+              rule.reportLint(astNode);
+            }
           }
         }
       }
@@ -74,5 +74,14 @@ class _Visitor extends SimpleAstVisitor {
       print(err);
       print(stack);
     }
+  }
+
+  @override
+  void visitImportDirective(ImportDirective node) {
+    verifyVisibility(
+        astNode: node,
+        staticElement: node.uriElement,
+        compilationUnit: node.thisOrAncestorMatching<CompilationUnit>(
+            (argument) => argument is CompilationUnit));
   }
 }

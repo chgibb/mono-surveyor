@@ -16,13 +16,15 @@ import 'dart:io';
 
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:analyzer/error/error.dart';
 import 'package:analyzer/src/generated/engine.dart' show AnalysisErrorInfoImpl;
 import 'package:path/path.dart' as path;
 import 'package:surveyor/src/analysis.dart';
 import 'package:surveyor/src/driver.dart';
 import 'package:surveyor/src/visitors.dart';
-import 'package:surveyors/src/print.dart';
+import 'package:surveyors/friendVisibility.dart';
+import 'package:surveyors/print.dart';
+import 'package:surveyors/src/findAndValidatePackages.dart';
+import 'package:surveyors/src/package.dart';
 
 /// Lints specified projects with a defined set of lints.
 ///
@@ -31,6 +33,8 @@ import 'package:surveyors/src/print.dart';
 /// dart example/lint_surveyor.dart <source dir>
 void main(List<String> args) async {
   var stopwatch = Stopwatch()..start();
+
+  List<Package> packages = findAndValidatePackages();
 
   if (args.length == 1) {
     var dir = args[0];
@@ -59,6 +63,7 @@ void main(List<String> args) async {
 
   driver.lints = [
     PrintSurveyor(),
+    FriendVisibilitySurveyor(packages: packages)
   ];
 
   await driver.analyze();
@@ -115,15 +120,11 @@ class AnalysisAdvisor extends SimpleAstVisitor
 
   @override
   void reportError(AnalysisResultWithErrors result) {
-    var errors = result.errors.where(showError).toList();
+    var errors = result.errors.toList();
     if (errors.isEmpty) {
       return;
     }
     formatter.formatErrors([AnalysisErrorInfoImpl(errors, result.lineInfo)]);
     formatter.flush();
   }
-
-  //Only show lints.
-  bool showError(AnalysisError error) => error.errorCode.type == ErrorType.LINT;
 }
-

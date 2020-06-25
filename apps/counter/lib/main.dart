@@ -53,6 +53,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with CounterMixin {
   void _incrementCounter() {
+    incrementCounter(widget: this, setState: setState);
   }
 
   @override

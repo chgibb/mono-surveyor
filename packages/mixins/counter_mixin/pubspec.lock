@@ -77,7 +77,7 @@ packages:
   increment:
     dependency: "direct main"
     description:
-      path: "../increment"
+      path: "../../increment"
       relative: true
     source: path
     version: "0.0.1"

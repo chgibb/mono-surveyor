@@ -60,7 +60,7 @@ packages:
   counter_mixin:
     dependency: "direct main"
     description:
-      path: "../../packages/counter_mixin"
+      path: "../../packages/mixins/counter_mixin"
       relative: true
     source: path
     version: "0.0.1"

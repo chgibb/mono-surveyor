@@ -38,6 +38,10 @@ Surveys are completely customizable per package. They are executed step by step 
 See `.vscode/launch.json` for an example of how to setup the usual Flutter debugging experience in VSCode for apps in the monorepo.
 See `.vscode/tasks.json` for an example integration with VSCode's task runner to run surveys on changed packages.
 
+### Other Utilities
+`surveyors/bin/collect_packages.dart` can be run to analyze the monorepo and print a crude layout of each package and it's dependencies.  
+`surveyors/bin/determine_changed_packages.dart` can be run to show packages that have been directly modified and all packages that will be affected through any of their transitive dependencies having been modified. This is the same resolution algorithm used by survey running.
+
 ### Further Work
 - Surveys are run serially and without regard to dependency order. That means library packages which build and distribute some artifacts or other files as Flutter `assets` 
 may not work.

@@ -24,4 +24,6 @@ Future<List<String>> findSurvey(
   } catch (err) {
     return null;
   }
+
+  return null;
 }

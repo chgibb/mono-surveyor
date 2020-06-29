@@ -15,7 +15,7 @@ Future<List<Package>> determineDirectlyAffectedPackages(
       ?.forEach((x) {
     res.addAll(packages
         .where((element) =>
-            RegExp(RegExp.escape(element.dir), caseSensitive: false)
+            RegExp(RegExp.escape(element.relativePath), caseSensitive: false)
                 ?.stringMatch(x)
                 ?.isNotEmpty ??
             false)

@@ -6,15 +6,20 @@ void determineTransitivelyAffectedPackages(
     @required List<Package> packages,
     @required List<Package> transitivelyAffectedPackages}) {
   if (transitivelyAffectedPackages.firstWhere(
-          (x) => x.dir == affectedPackage.dir,
+          (x) => x.relativePath == affectedPackage.relativePath,
           orElse: () => null) ==
       null) {
     transitivelyAffectedPackages.add(affectedPackage);
+  } else {
+    return;
   }
 
-  affectedPackage.friends.forEach((friend) {
-    packages.forEach((pkg) {
-      if (pkg.dir == friend) {
+  packages?.forEach((pkg) {
+    pkg?.pathDependencies?.forEach((dep) {
+      if (transitivelyAffectedPackages?.firstWhere(
+              (element) => element?.absolutePath == dep,
+              orElse: () => null) !=
+          null) {
         determineTransitivelyAffectedPackages(
             affectedPackage: pkg,
             packages: packages,

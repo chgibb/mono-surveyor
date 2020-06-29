@@ -40,7 +40,7 @@ class _Visitor extends SimpleAstVisitor {
 
       invokeePackage = packages.firstWhere(
           (x) =>
-              RegExp(RegExp.escape(x.dir), caseSensitive: false)
+              RegExp(RegExp.escape(x.relativePath), caseSensitive: false)
                   .stringMatch(invokeeLibrarySource ?? "")
                   ?.isNotEmpty ??
               false,
@@ -51,16 +51,16 @@ class _Visitor extends SimpleAstVisitor {
             invokeeLibrarySource) {
           Package invokerPackage = packages.firstWhere(
               (x) =>
-                  RegExp(RegExp.escape(x.dir), caseSensitive: false)
+                  RegExp(RegExp.escape(x.relativePath), caseSensitive: false)
                       .stringMatch(compilationUnit
                           .declaredElement?.librarySource?.fullName)
                       ?.isNotEmpty ??
                   false,
               orElse: () => null);
 
-          if (invokeePackage.dir != invokerPackage.dir) {
+          if (invokeePackage.relativePath != invokerPackage.relativePath) {
             bool isLegalReference = invokeePackage.friends.firstWhere(
-                    (element) => element == invokerPackage.dir,
+                    (element) => element == invokerPackage.relativePath,
                     orElse: () => null) !=
                 null;
 

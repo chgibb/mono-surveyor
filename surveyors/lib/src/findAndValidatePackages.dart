@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:surveyors/src/findPackages.dart';
-import 'package:surveyors/src/isPackagePath.dart';
 import 'package:surveyors/src/package.dart';
 import 'package:surveyors/src/packageFriends.dart';
 import 'package:surveyors/src/packagePathDependencies.dart';

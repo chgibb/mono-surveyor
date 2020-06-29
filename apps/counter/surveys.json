@@ -1,0 +1,7 @@
+{
+    "surveys": {
+        "lint": [
+            "flutter analyze"
+        ]
+    }
+}

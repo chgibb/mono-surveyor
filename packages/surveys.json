@@ -1,7 +1,0 @@
-{
-    "surveys": {
-        "lint": [
-            "flutter analyze"
-        ]
-    }
-}

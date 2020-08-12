@@ -1,1 +1,0 @@
-dart surveyors/bin/run_survey.dart --survey=lint --no-just-affected

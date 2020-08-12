@@ -1,5 +1,5 @@
 import 'package:git/git.dart';
-import 'package:surveyors/src/package.dart';
+import 'package:mono_surveyor/src/package.dart';
 import 'package:meta/meta.dart';
 
 Future<List<Package>> determineDirectlyAffectedPackages(

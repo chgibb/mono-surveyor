@@ -1,8 +1,8 @@
-import 'package:surveyors/src/determineDirectlyAffectedPackages.dart';
-import 'package:surveyors/src/determineTransitivelyAffectedPackages.dart';
-import 'package:surveyors/src/findAndValidatePackages.dart';
-import 'package:surveyors/src/findOriginDefaultBranch.dart';
-import 'package:surveyors/src/package.dart';
+import 'package:mono_surveyor/src/determineDirectlyAffectedPackages.dart';
+import 'package:mono_surveyor/src/determineTransitivelyAffectedPackages.dart';
+import 'package:mono_surveyor/src/findAndValidatePackages.dart';
+import 'package:mono_surveyor/src/findOriginDefaultBranch.dart';
+import 'package:mono_surveyor/src/package.dart';
 
 void main() async {
   List<Package> packages = findAndValidatePackages();

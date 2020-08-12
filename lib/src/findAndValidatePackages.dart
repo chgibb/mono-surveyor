@@ -1,8 +1,8 @@
 import 'package:path/path.dart';
-import 'package:surveyors/src/findPackages.dart';
-import 'package:surveyors/src/package.dart';
-import 'package:surveyors/src/packagePathDependencies.dart';
-import 'package:surveyors/src/resolvePathRelativeToRoot.dart';
+import 'package:mono_surveyor/src/findPackages.dart';
+import 'package:mono_surveyor/src/package.dart';
+import 'package:mono_surveyor/src/packagePathDependencies.dart';
+import 'package:mono_surveyor/src/resolvePathRelativeToRoot.dart';
 
 List<Package> findAndValidatePackages({bool prinResult = false}) {
   List<Package> packages = findPackages()

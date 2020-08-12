@@ -1,4 +1,4 @@
-import 'package:surveyors/src/findAndValidatePackages.dart';
+import 'package:mono_surveyor/src/findAndValidatePackages.dart';
 
 void main() async {
   findAndValidatePackages(prinResult: true);

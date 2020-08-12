@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:surveyors/src/determineDirectlyAffectedPackages.dart';
-import 'package:surveyors/src/determineTransitivelyAffectedPackages.dart';
-import 'package:surveyors/src/findAndValidatePackages.dart';
-import 'package:surveyors/src/findOriginDefaultBranch.dart';
-import 'package:surveyors/src/package.dart';
-import 'package:surveyors/src/runSurvey.dart';
+import 'package:mono_surveyor/src/determineDirectlyAffectedPackages.dart';
+import 'package:mono_surveyor/src/determineTransitivelyAffectedPackages.dart';
+import 'package:mono_surveyor/src/findAndValidatePackages.dart';
+import 'package:mono_surveyor/src/findOriginDefaultBranch.dart';
+import 'package:mono_surveyor/src/package.dart';
+import 'package:mono_surveyor/src/runSurvey.dart';
 
 void main(List<String> args) async {
   final List<Package> packages = findAndValidatePackages(prinResult: false);

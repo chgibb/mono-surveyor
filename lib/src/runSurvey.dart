@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:meta/meta.dart';
-import 'package:surveyors/src/findSurvey.dart';
+import 'package:mono_surveyor/src/findSurvey.dart';
 
-import 'package:surveyors/src/package.dart';
-import 'package:surveyors/src/runSurveyStep.dart';
+import 'package:mono_surveyor/src/package.dart';
+import 'package:mono_surveyor/src/runSurveyStep.dart';
 
 Future<void> runSurvey(
     {@required Package package, @required String survey}) async {

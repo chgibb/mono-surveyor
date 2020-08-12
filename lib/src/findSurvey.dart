@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
 
-import 'package:surveyors/src/package.dart';
+import 'package:mono_surveyor/src/package.dart';
 
 Future<List<String>> findSurvey(
     {@required Package package, @required String survey}) async {

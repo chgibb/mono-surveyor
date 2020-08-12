@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:meta/meta.dart';
 
-import 'package:surveyors/src/package.dart';
+import 'package:mono_surveyor/src/package.dart';
 
 Future<int> runSurveyStep(
     {@required Package package, @required String step}) async {

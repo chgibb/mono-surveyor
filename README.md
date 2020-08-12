@@ -26,11 +26,15 @@ For example each package in this template has the following `surveys.json`:
 Each key in `surveys` is an array of strings. Each string represents a command (or survey step) that will be run in the given order in the root of the package. If a survey step returns anything other than `0`, the survey for the package will be aborted and any pending surveys for other packages will also be aborted. Packages can ignore specific surveys by specifying an empty array of steps for the survey to be ignored. It is an error for a package to not provide at least an empty array of steps for a survey that is being performed on it.
 
 ### Running Surveys
+Activate `mono_surveyor` first with
+```
+flutter pub global activate -sgit https://github.com/chgibb/mono-surveyor
+```
 To run a survey on the monorepo, invoke
 ```
-dart surveyors/bin/run_survey.dart --survey=<survey_name>
+flutter pub global run mono_surveyor:run_survey --survey=<survey_name>
 ```
-By default, `run_survey.dart` will determine the minimal set of packages to survey. The flag `--no-just-affected` can be provided to survey every package in the monorepo as if they've all been changed.
+By default, `run_survey` will determine the minimal set of packages to survey. The flag `--no-just-affected` can be provided to survey every package in the monorepo as if they've all been changed.
 
 Surveys are completely customizable per package. They are executed step by step in the root of each package. This means packages can optionally provide their own  shell scripts, `npm` commands or other executables without any thought given to other packages in the monorepo. The names of surveys themselves are completely arbitrary as long as they do not contain whitespace and are also valid JSON strings. i.e. `build-release-android-qa`, `build_release_ios_app_store` are both valid survey names.
 
@@ -39,8 +43,8 @@ See `.vscode/launch.json` for an example of how to setup the usual Flutter debug
 See `.vscode/tasks.json` for an example integration with VSCode's task runner to run surveys on changed packages.
 
 ### Other Utilities
-`surveyors/bin/collect_packages.dart` can be run to analyze the monorepo and print a crude layout of each package and it's dependencies.  
-`surveyors/bin/determine_changed_packages.dart` can be run to show packages that have been directly modified and all packages that will be affected through any of their transitive dependencies having been modified. This is the same resolution algorithm used by survey running.
+`mono_surveyor:collect_packages` can be run to analyze the monorepo and print a crude layout of each package and it's dependencies.  
+`mono_surveyor:determine_changed_packages` can be run to show packages that have been directly modified and all packages that will be affected through any of their transitive dependencies having been modified. This is the same resolution algorithm used by survey running.
 
 ### Further Work
 - Surveys are run serially and without regard to dependency order. That means library packages which build and distribute some artifacts or other files as Flutter `assets` 

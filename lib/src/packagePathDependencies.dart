@@ -16,7 +16,7 @@ List<String> packagePathDependencies({@required String packagePath}) {
   List<String> res = [];
   final YamlMap doc =
       loadYaml(File("$packagePath/pubspec.yaml").readAsStringSync());
-  doc["dependencies"].keys?.forEach((element) {
+  doc["dependencies"]?.keys?.forEach((element) {
     var dep = doc["dependencies"][element];
     if (dep is YamlMap) {
       var path = _extractPathDependency(dep: dep);
@@ -26,7 +26,7 @@ List<String> packagePathDependencies({@required String packagePath}) {
     }
   });
 
-  doc["dev_dependencies"].keys?.forEach((element) {
+  doc["dev_dependencies"]?.keys?.forEach((element) {
     var dep = doc["dev_dependencies"][element];
     if (dep is YamlMap) {
       var path = _extractPathDependency(dep: dep);

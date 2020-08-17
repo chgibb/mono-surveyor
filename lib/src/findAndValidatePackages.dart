@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:path/path.dart';
 import 'package:mono_surveyor/src/findPackages.dart';
 import 'package:mono_surveyor/src/package.dart';
@@ -9,7 +11,7 @@ List<Package> findAndValidatePackages({bool prinResult = false}) {
   Map<String, String> packageNames = {};
   List<Package> packages = findPackages()
       ?.map((e) => Package(
-          relativePath: e,
+          relativePath: relative(e,from: Directory.current.path),
           absolutePath: canonicalize(e),
           packageName: packageName(packagePath: e),
           pathDependencies: packagePathDependencies(packagePath: e)

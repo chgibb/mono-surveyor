@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:mono_surveyor/src/isPackagePath.dart';
 
 List<String> findPackages() {
-  var baseDirs = ["apps"];
+  var baseDirs = [Directory.current.path];
 
   List<String> dirs = [];
 

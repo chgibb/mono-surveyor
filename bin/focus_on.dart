@@ -8,6 +8,8 @@ import 'package:mono_surveyor/src/findAndValidatePackages.dart';
 import 'package:mono_surveyor/src/initSparseCheckoutCone.dart';
 import 'package:mono_surveyor/src/isWorkingTreeClean.dart';
 import 'package:mono_surveyor/src/package.dart';
+import 'package:mono_surveyor/src/removeEmptyDirectories.dart';
+import 'package:mono_surveyor/src/removeUntrackedFiles.dart';
 import 'package:mono_surveyor/src/resolveTopDownDependencyTree.dart';
 import 'package:mono_surveyor/src/setSparseCheckoutPaths.dart';
 
@@ -61,6 +63,9 @@ void main(List<String> args) async {
     exit(0);
   }
 
+  print("Focusing on:");
+  packagesToFocusOn.forEach((x) => print("  ${x.packageName}"));
+
   if (!await initSparseCheckoutCone()) {
     print("Failed to initialize sparse checkout cone");
     exit(1);
@@ -70,4 +75,11 @@ void main(List<String> args) async {
     print("Failed to set sparse checkout paths");
     exit(1);
   }
+
+  if (!await removeUntrackedFiles()) {
+    print("Failed to remove untracked files");
+    exit(1);
+  }
+
+  await removeEmptyDirectories(Directory.current);
 }

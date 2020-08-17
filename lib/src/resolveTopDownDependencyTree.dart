@@ -9,7 +9,6 @@ void resolveTopDownDependencyTree(
     if (package.pathDependencies
             .firstWhere((k) => k == x.absolutePath, orElse: () => null) !=
         null) {
-          print(x.packageName);
       resolved.add(x);
       resolveTopDownDependencyTree(
           package: x, packages: packages, resolved: resolved);

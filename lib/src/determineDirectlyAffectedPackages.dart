@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 Future<List<Package>> determineDirectlyAffectedPackages(
     {@required String ref, @required List<Package> packages}) async {
-  var diff = await runGit(["diff", ref]);
+  var diff = await runGit(["diff", "$ref...HEAD"]);
 
   var diffLines = (diff?.stdout as String)?.split("\n");
 
@@ -15,10 +15,13 @@ Future<List<Package>> determineDirectlyAffectedPackages(
       ?.forEach((x) {
     res.addAll(packages
         .where((element) =>
-            RegExp(RegExp.escape(element.relativePath), caseSensitive: false)
-                ?.stringMatch(x)
-                ?.isNotEmpty ??
-            false)
+            (RegExp(RegExp.escape(element.relativePath), caseSensitive: false)
+                    ?.stringMatch(x)
+                    ?.isNotEmpty ??
+                false) &&
+            res.firstWhere((k) => k.packageName == element.packageName,
+                    orElse: () => null) ==
+                null)
         ?.toList());
   });
 
@@ -28,10 +31,13 @@ Future<List<Package>> determineDirectlyAffectedPackages(
   newFileLines?.forEach((x) {
     res.addAll(packages
         .where((element) =>
-            RegExp(RegExp.escape(element.relativePath), caseSensitive: false)
-                ?.stringMatch(x)
-                ?.isNotEmpty ??
-            false)
+            (RegExp(RegExp.escape(element.relativePath), caseSensitive: false)
+                    ?.stringMatch(x)
+                    ?.isNotEmpty ??
+                false) &&
+            res.firstWhere((k) => k.packageName == element.packageName,
+                    orElse: () => null) ==
+                null)
         ?.toList());
   });
 

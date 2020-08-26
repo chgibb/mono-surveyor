@@ -6,7 +6,7 @@ Future<bool> setSparseCheckoutPaths({
   @required List<Package> packages,
 }) async {
   var res = await runGit(
-      ["sparse-checkout", "set", ...packages.map((e) => e?.relativePath)]);
+      ["sparse-checkout", "set", ".vscode", ...packages.map((e) => e?.relativePath)]);
 
   return res.exitCode == 0;
 }

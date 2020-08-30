@@ -7,8 +7,11 @@ void resolveTopDownDependencyTree(
     @required List<Package> resolved}) {
   packages.forEach((x) {
     if (package.pathDependencies
-            .firstWhere((k) => k == x.absolutePath, orElse: () => null) !=
-        null) {
+                .firstWhere((k) => k == x.absolutePath, orElse: () => null) !=
+            null &&
+        resolved.firstWhere((k) => k.absolutePath == x.absolutePath,
+                orElse: () => null) ==
+            null) {
       resolved.add(x);
       resolveTopDownDependencyTree(
           package: x, packages: packages, resolved: resolved);

@@ -14,7 +14,7 @@ Future<int> runSurveyStep(
   List<String> parts = step.split(RegExp("\\s"));
   String exec = parts.removeAt(0);
 
-  env.keys.forEach((x) {
+  env?.keys?.forEach((x) {
     var regExp = RegExp(RegExp.escape(x), caseSensitive: true);
     var index =
         parts.indexWhere((k) => regExp.stringMatch(k)?.isNotEmpty ?? false);

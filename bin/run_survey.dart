@@ -44,8 +44,15 @@ void main(List<String> args) async {
     exit(0);
   }
 
+  Map<String, String> env = {};
+  for (var i = 0; i != results?.rest?.length; i += 2) {
+    env[results.rest[i]] = results.rest[i + 1];
+  }
+
   print("Packages to Survey:");
   packagesToSurvey?.forEach((element) => print("   ${element?.relativePath}"));
-  await Future.forEach<Package>(packagesToSurvey,
-      (element) => runSurvey(package: element, survey: results["survey"]));
+  await Future.forEach<Package>(
+      packagesToSurvey,
+      (element) =>
+          runSurvey(package: element, survey: results["survey"], env: env));
 }

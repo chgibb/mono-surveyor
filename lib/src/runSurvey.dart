@@ -7,7 +7,9 @@ import 'package:mono_surveyor/src/package.dart';
 import 'package:mono_surveyor/src/runSurveyStep.dart';
 
 Future<void> runSurvey(
-    {@required Package package, @required String survey}) async {
+    {@required Package package,
+    @required String survey,
+    @required Map<String, String> env}) async {
   print("Running survey $survey on ${package.relativePath}");
 
   List<String> steps = await findSurvey(package: package, survey: survey);
@@ -17,7 +19,11 @@ Future<void> runSurvey(
     exit(1);
   } else {
     await Future.forEach(steps, (element) async {
-      var exitCode = await runSurveyStep(package: package, step: element);
+      var exitCode = await runSurveyStep(
+        package: package,
+        step: element,
+        env: env,
+      );
       if (exitCode != 0) {
         exit(exitCode);
       }

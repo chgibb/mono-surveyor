@@ -21,7 +21,8 @@ Future<int> runSurveyStep(
 
     while (index != -1) {
       parts.setAll(index, [parts[index].replaceAll(regExp, env[x])]);
-      index = parts.indexWhere((k) => k == x);
+      index =
+          parts.indexWhere((k) => regExp.stringMatch(k)?.isNotEmpty ?? false);
     }
   });
 

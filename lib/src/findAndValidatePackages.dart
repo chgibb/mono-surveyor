@@ -11,7 +11,7 @@ List<Package> findAndValidatePackages({bool prinResult = false}) {
   Map<String, String> packageNames = {};
   List<Package> packages = findPackages()
       ?.map((e) => Package(
-          relativePath: relative(e,from: Directory.current.path),
+          relativePath: relative(e, from: Directory.current.path),
           absolutePath: canonicalize(e),
           packageName: packageName(packagePath: e),
           pathDependencies: packagePathDependencies(packagePath: e)
@@ -19,6 +19,8 @@ List<Package> findAndValidatePackages({bool prinResult = false}) {
                   resolvePathRelativetoRoot(packagePath: e, relativePath: x))
               ?.toList()))
       ?.toList();
+  packages
+      ?.removeWhere((x) => RegExp("\\$separator\\.").hasMatch(x.absolutePath));
   packages?.forEach((x) {
     if (packageNames[x.packageName] != null) {
       throw "The package name ${x.packageName} has been declared multiple times";

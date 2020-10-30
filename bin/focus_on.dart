@@ -46,8 +46,17 @@ void main(List<String> args) async {
     exit(0);
   }
 
-  Package startingPackage =
-      packages.firstWhere((x) => x.packageName == results["package"]);
+  Package startingPackage = packages.firstWhere(
+      (x) =>
+          x.packageName.toLowerCase().trim() ==
+          (results["package"] as String).toLowerCase().trim(),
+      orElse: () => null);
+
+  if (startingPackage == null) {
+    print(
+        "Could not focus on package \"${results["package"]}\". Package does not exist");
+    exit(1);
+  }
 
   List<Package> packagesToFocusOn = [];
 

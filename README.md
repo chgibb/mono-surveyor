@@ -35,6 +35,17 @@ By default, `run_survey` will determine the minimal set of packages to survey. T
 
 Surveys are completely customizable per package. They are executed step by step in the root of each package. This means packages can optionally provide their own  shell scripts, `npm` commands or other executables without any thought given to other packages in the monorepo. The names of surveys themselves are completely arbitrary as long as they do not contain whitespace and are also valid JSON strings. i.e. `build-release-android-qa`, `build_release_ios_app_store` are both valid survey names.
 
+### Package Focus
+``` 
+mono_surveyor:focus_on --package=<package name>
+``` 
+Where `--package` is the `name:` field in some package's `pubspec.yaml`, can be invoked to use the dependency information from the `pubspec.yaml`s in the monorepo to setup a git sparse checkout cone that will include only what is required to build, test and run the package given by `--package`. invoking `focus_on` requires that your working tree is clean and will modify files on disk (deleting empty directories) as well as the state of your checkout (enabling sparse checkout, overwriting cone settings) so make sure changes are committed/stashed before running this command. 
+
+```
+mono_surveyor:focus_on --disable
+```
+Can be invoked to disable sparse checkout mode and delete cone settings.
+
 ### IDE Integration
 See `.vscode/launch.json` in https://github.com/chgibb/mono-surveyor-demo for an example of how to setup the usual Flutter debugging experience in VSCode for apps in a monorepo.
 See `.vscode/tasks.json` in https://github.com/chgibb/mono-surveyor-demo for an example integration with VSCode's task runner to run surveys on changed packages.

@@ -10,6 +10,7 @@ Future<bool> setSparseCheckoutPaths({
     "set",
     ".vscode",
     ".idea",
+    ".run",
     "scripts",
     ...packages.map((e) => e?.relativePath)
   ]);

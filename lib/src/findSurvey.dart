@@ -5,8 +5,10 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 
 import 'package:mono_surveyor/src/package.dart';
+import 'package:mono_surveyor/src/surveyStep.dart';
+import 'package:mono_surveyor/src/surveys.dart';
 
-Future<List<String>> findSurvey(
+Future<List<SurveyStep>> findSurvey(
     {@required Package package, @required String survey}) async {
   try {
     var localFile = File("${package.relativePath}/surveys.json");
@@ -14,16 +16,17 @@ Future<List<String>> findSurvey(
 
     Uint8List content = file.readSync(file.lengthSync());
 
-    Map<String, dynamic> json = jsonDecode(utf8.decode(content));
+    Surveys surveys = Surveys.fromJson(jsonDecode(utf8.decode(content)));
 
     file.closeSync();
 
-    if (json["surveys"][survey] is List) {
-      return json["surveys"][survey]?.toList()?.cast<String>();
-    }
+    return surveys.surveys.entries
+        .firstWhere(
+          (x) => x.key == survey,
+          orElse: () => null,
+        )
+        ?.value;
   } catch (err) {
     return null;
   }
-
-  return null;
 }

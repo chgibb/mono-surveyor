@@ -54,5 +54,5 @@ void main(List<String> args) async {
   await Future.forEach<Package>(
       packagesToSurvey,
       (element) =>
-          runSurvey(package: element, survey: results["survey"], env: env));
+          runSurvey(package: element, surveyName: results["survey"], env: env));
 }

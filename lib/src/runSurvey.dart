@@ -5,23 +5,25 @@ import 'package:mono_surveyor/src/findSurvey.dart';
 
 import 'package:mono_surveyor/src/package.dart';
 import 'package:mono_surveyor/src/runSurveyStep.dart';
+import 'package:mono_surveyor/src/surveyStep.dart';
 
 Future<void> runSurvey(
     {@required Package package,
-    @required String survey,
+    @required String surveyName,
     @required Map<String, String> env}) async {
-  print("Running survey $survey on ${package.relativePath}");
+  print("Running survey $surveyName on ${package.relativePath}");
 
-  List<String> steps = await findSurvey(package: package, survey: survey);
+  List<SurveyStep> surveySteps =
+      await findSurvey(package: package, survey: surveyName);
 
-  if (steps == null) {
-    print("Package ${package?.relativePath} does not support $survey survey");
+  if (surveySteps == null) {
+    print("Package ${package?.relativePath} does not support $surveyName survey");
     exit(1);
   } else {
-    await Future.forEach(steps, (element) async {
+    await Future.forEach(surveySteps, (element) async {
       var exitCode = await runSurveyStep(
         package: package,
-        step: element,
+        surveyStep: element,
         env: env,
       );
       if (exitCode != 0) {

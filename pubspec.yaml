@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
   surveyor:
     git:
-      url: git://github.com/pq/surveyor
+      url: https://github.com/pq/surveyor.git
       ref: 776e3099d4acf5b81051333a477dca06d987029b
   git: 1.0.1
   yaml: 2.2.1    
